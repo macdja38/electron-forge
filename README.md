@@ -8,8 +8,8 @@
 
 A complete tool for building modern Electron applications.
 
-Electron Forge unifies the existing (and well maintained) build tools for
-Electron development into a simple, easy to use package so that anyone can
+Electron Forge unifies Electron's build tooling ecosystem for
+Electron development into a single extensible interface so that anyone can
 jump right in to Electron development.
 
 ---
