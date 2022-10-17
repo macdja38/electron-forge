@@ -6,16 +6,9 @@
   "engines": {
     "node": ">= 14.17.5"
   },
-  "bolt": {
-    "workspaces": [
-      "packages/api/*",
-      "packages/maker/*",
-      "packages/publisher/*",
-      "packages/utils/*",
-      "packages/plugin/*",
-      "packages/template/*"
-    ]
-  },
+  "packages": [
+    "packages/*"
+  ],
   "scripts": {
     "clean": "rimraf dist && bolt ws exec -- rimraf dist tsconfig.tsbuildinfo",
     "build": "bolt ws exec -- tsc --emitDeclarationOnly && bolt ws exec -- swc src --out-dir dist --quiet --extensions \".ts\" --config-file ../../../.swcrc",
@@ -66,6 +59,7 @@
     "inquirer": "^8.0.0",
     "lodash": "^4.17.20",
     "log-symbols": "^4.0.0",
+    "macos-alias": "^0.2.11",
     "mime-types": "^2.1.25",
     "node-fetch": "^2.6.7",
     "nugget": "^2.0.1",
@@ -131,6 +125,7 @@
     "fetch-mock": "^9.10.7",
     "generate-changelog": "^1.8.0",
     "husky": "^7.0.1",
+    "lerna": "^6.0.1",
     "lint-staged": "^12.1.7",
     "listr2": "^4.0.4",
     "minimist": "^1.2.6",
@@ -174,5 +169,8 @@
   },
   "volta": {
     "node": "14.17.5"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
