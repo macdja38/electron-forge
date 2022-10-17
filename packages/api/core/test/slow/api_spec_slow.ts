@@ -111,6 +111,7 @@ for (const nodeInstaller of ['npm', 'yarn']) {
       });
 
       it('should create deep files correctly', async () => {
+        console.log(dir);
         await expectProjectPathExists(dir, 'src/foo.js', 'file');
         await expectProjectPathExists(dir, 'src/index.html', 'file');
       });
@@ -121,7 +122,7 @@ for (const nodeInstaller of ['npm', 'yarn']) {
 
       after(async () => {
         await fs.remove(dir);
-        execSync('npm unlink', {
+        execSync('npm unlink -g', {
           cwd: path.resolve(__dirname, '../fixture/custom_init'),
         });
       });
