@@ -16,7 +16,7 @@ export default class MakerSquirrel extends MakerBase<MakerSquirrelConfig> {
     return this.isInstalled('electron-winstaller') && !process.env.DISABLE_SQUIRREL_TEST;
   }
 
-  async make({ dir, makeDir, targetArch, packageJSON, appName, forgeConfig }: MakerOptions): Promise<string[]> {
+  async make({ dir, makeDir, targetArch, packageJSON, appName }: MakerOptions): Promise<string[]> {
     const outPath = path.resolve(makeDir, `squirrel.windows/${targetArch}`);
     await this.ensureDirectory(outPath);
 
@@ -24,7 +24,7 @@ export default class MakerSquirrel extends MakerBase<MakerSquirrelConfig> {
       name: packageJSON.name,
       title: appName,
       noMsi: true,
-      exe: `${forgeConfig.packagerConfig.executableName || appName}.exe`,
+      exe: `${appName}.exe`,
       setupExe: `${appName}-${packageJSON.version} Setup.exe`,
       ...this.config,
       appDirectory: dir,

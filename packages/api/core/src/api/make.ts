@@ -219,7 +219,6 @@ export default async ({
             maker.prepareConfig(targetArch);
             const artifacts = await maker.make({
               appName,
-              forgeConfig,
               packageJSON,
               targetArch,
               dir: packageDir,
