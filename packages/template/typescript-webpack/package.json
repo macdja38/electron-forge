@@ -23,5 +23,8 @@
     "@electron-forge/test-utils": "6.0.0-beta.67",
     "chai": "^4.3.3",
     "fast-glob": "^3.2.7"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
