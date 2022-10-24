@@ -5,7 +5,7 @@ import * as path from 'path';
 import { CompilePluginConfig } from './Config';
 import { createCompileHook } from './lib/compile-hook';
 
-export default class LocalElectronPlugin extends PluginBase<CompilePluginConfig> {
+export default class CompilePlugin extends PluginBase<CompilePluginConfig> {
   name = 'electron-compile';
 
   private dir!: string;
