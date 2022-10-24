@@ -31,12 +31,6 @@ const prepare = new Listr([
         cwd: BASE_DIR,
       }),
   },
-  {
-    title: "Fetching README's",
-    // Why: somehow, referencing a TS file in a JS file works?
-    // eslint-disable-next-line node/no-missing-require
-    task: require('./sync-readmes'),
-  },
 ]);
 
 const publisher = new Listr([
