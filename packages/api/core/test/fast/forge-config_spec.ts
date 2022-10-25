@@ -1,13 +1,8 @@
 import { expect } from 'chai';
-import { ForgeConfig } from '@electron-forge/shared-types';
+import { ForgeConfig, IForgeResolvableMaker } from '@electron-forge/shared-types';
 import path from 'path';
 
-import findConfig, {
-  forgeConfigIsValidFilePath,
-  PackageJSONForInitialForgeConfig,
-  renderConfigTemplate,
-  setInitialForgeConfig,
-} from '../../src/util/forge-config';
+import findConfig, { forgeConfigIsValidFilePath, renderConfigTemplate, initializeForgeConfig } from '../../src/util/forge-config';
 
 const defaults = {
   packagerConfig: {},
@@ -215,42 +210,35 @@ describe('forge-config', () => {
 
   describe('setInitialForgeConfig', () => {
     it('should normalize hyphens in maker names to underscores', () => {
-      const packageJSON: PackageJSONForInitialForgeConfig = {
-        name: 'foo-bar',
-        config: {
-          forge: {
-            makers: [
-              {
-                name: '@electron-forge/maker-test',
-                config: {
-                  name: 'will be overwritten',
-                },
-              },
-            ],
+      const forgeConfig = {
+        makers: [
+          {
+            name: '@electron-forge/maker-squirrel',
+            config: {
+              name: 'will be overwritten',
+            },
           },
-        },
-      };
-      setInitialForgeConfig(packageJSON);
-      expect(packageJSON.config.forge.makers[0].config.name).to.equal('foo_bar');
+        ],
+      } as ForgeConfig;
+      initializeForgeConfig({ packageName: 'foo-bar', forgeConfig });
+      const makers = forgeConfig.makers as IForgeResolvableMaker[];
+      expect(makers[0].config.name).to.equal('foo_bar');
     });
 
     it('should handle when package.json name is not set', () => {
-      const packageJSON = {
-        config: {
-          forge: {
-            makers: [
-              {
-                name: '@electron-forge/maker-test',
-                config: {
-                  name: 'will be overwritten',
-                },
-              },
-            ],
+      const forgeConfig = {
+        makers: [
+          {
+            name: '@electron-forge/maker-squirrel',
+            config: {
+              name: 'will be overwritten',
+            },
           },
-        },
-      };
-      setInitialForgeConfig(packageJSON);
-      expect(packageJSON.config.forge.makers[0].config.name).to.equal('');
+        ],
+      } as ForgeConfig;
+      initializeForgeConfig({ packageName: undefined, forgeConfig });
+      const makers = forgeConfig.makers as IForgeResolvableMaker[];
+      expect(makers[0].config.name).to.equal('');
     });
   });
 });

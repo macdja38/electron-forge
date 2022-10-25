@@ -13,15 +13,6 @@ const underscoreCase = (str: string) =>
     .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
     .toUpperCase();
 
-export type PackageJSONForInitialForgeConfig = {
-  name?: string;
-  config: {
-    forge: {
-      makers: Pick<IForgeResolvableMaker, 'name' | 'config'>[];
-    };
-  };
-};
-
 // Why: needs access to Object methods and also needs to be able to match any interface.
 // eslint-disable-next-line @typescript-eslint/ban-types
 type ProxiedObject = object;
@@ -79,12 +70,17 @@ const proxify = <T extends ProxiedObject>(buildIdentifier: string | (() => strin
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 /**
- * Sets sensible defaults for the `config.forge` object.
+ * Sets sensible defaults for the Forge configuration. Mutates the existing
+ * config object in-place.
  */
-export function setInitialForgeConfig(packageJSON: PackageJSONForInitialForgeConfig): void {
-  const { name = '' } = packageJSON;
+export function initializeForgeConfig(opts: { packageName?: string; forgeConfig: ForgeConfig }): void {
+  const packageName = opts.packageName ?? '';
+  const makersArray = opts.forgeConfig.makers as IForgeResolvableMaker[];
+  const makerSquirrel = makersArray.find((m) => m.name === '@electron-forge/maker-squirrel');
 
-  ((packageJSON.config.forge as ForgeConfig).makers as IForgeResolvableMaker[])[0].config.name = name.replace(/-/g, '_');
+  if (makerSquirrel) {
+    makerSquirrel.config.name = packageName.replace(/-/g, '_');
+  }
 }
 
 export type BuildIdentifierMap<T> = Record<string, T | undefined>;

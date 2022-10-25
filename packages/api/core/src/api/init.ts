@@ -11,7 +11,7 @@ import initGit from './init-scripts/init-git';
 import initNPM from './init-scripts/init-npm';
 import installDepList, { DepType } from '../util/install-dependencies';
 import { readRawPackageJson } from '../util/read-package-json';
-import { setInitialForgeConfig } from '../util/forge-config';
+import { initializeForgeConfig } from '../util/forge-config';
 
 const d = debug('electron-forge:init');
 
@@ -64,9 +64,11 @@ export default async ({ dir = process.cwd(), interactive = false, copyCIFiles = 
 
   if (typeof templateModule.initializeTemplate === 'function') {
     await templateModule.initializeTemplate(dir, { copyCIFiles });
-    const packageJSON = await readRawPackageJson(dir);
-    setInitialForgeConfig(packageJSON);
-    await fs.writeJson(path.join(dir, 'package.json'), packageJSON, { spaces: 2 });
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const forgeConfig = require(path.resolve(dir, 'forge.config.js'));
+    const packageName = (await readRawPackageJson(dir)).name;
+    initializeForgeConfig({ packageName, forgeConfig });
+    await fs.writeFile(path.join(dir, 'forge.config.js'), `module.exports = ${JSON.stringify(forgeConfig, null, 2)}`);
   }
 
   await asyncOra('Installing Template Dependencies', async () => {
