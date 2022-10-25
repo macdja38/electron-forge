@@ -77,6 +77,10 @@ for (const nodeInstaller of ['npm', 'yarn']) {
         expect(await fs.pathExists(path.resolve(dir, 'node_modules/@electron-forge/cli')), '@electron-forge/cli should exist').to.equal(true);
       });
 
+      it('should create a forge.config.js', async () => {
+        await expectProjectPathExists(dir, 'forge.config.js', 'file');
+      });
+
       describe('lint', () => {
         it('should initially pass the linting process', () => expectLintToPass(dir));
       });
@@ -197,26 +201,21 @@ for (const nodeInstaller of ['npm', 'yarn']) {
         await updatePackageJSON(dir, async (packageJSON) => {
           packageJSON.name = 'Name';
           packageJSON.productName = 'Product Name';
-          packageJSON.customProp = 'propVal';
         });
 
         await forge.import({ dir });
 
+        const config = require(path.resolve(dir, 'forge.config.js'));
+
         const {
-          config: {
-            forge: {
-              makers: [
-                {
-                  config: { name: winstallerName },
-                },
-              ],
+          makers: [
+            {
+              config: { name: winstallerName },
             },
-          },
-          customProp,
-        } = await readRawPackageJson(dir);
+          ],
+        } = config;
 
         expect(winstallerName).to.equal('Name');
-        expect(customProp).to.equal('propVal');
       });
 
       after(async () => {
@@ -240,7 +239,13 @@ describe('Electron Forge API', () => {
         packageJSON.name = 'testapp';
         packageJSON.version = '1.0.0-beta.1';
         packageJSON.productName = 'Test-App';
-        packageJSON.config.forge.packagerConfig.asar = false;
+        packageJSON.config = packageJSON.config || {};
+        packageJSON.config.forge = {
+          ...packageJSON.config.forge,
+          packagerConfig: {
+            asar: false,
+          },
+        };
         if (process.platform === 'win32') {
           await fs.copy(path.join(__dirname, '..', 'fixture', 'bogus-private-key.pvk'), path.join(dir, 'default.pvk'));
           devCert = await createDefaultCertificate('CN=Test Author', { certFilePath: dir });
