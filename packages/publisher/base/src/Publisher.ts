@@ -1,4 +1,4 @@
-import { ForgePlatform, ForgeConfig, ForgeMakeResult, IForgePublisher } from '@electron-forge/shared-types';
+import { ForgePlatform, ResolvedForgeConfig, ForgeMakeResult, IForgePublisher } from '@electron-forge/shared-types';
 
 export interface PublisherOptions {
   /**
@@ -14,7 +14,7 @@ export interface PublisherOptions {
    *
    * You probably shouldn't use this
    */
-  forgeConfig: ForgeConfig;
+  forgeConfig: ResolvedForgeConfig;
 }
 
 export default abstract class Publisher<C> implements IForgePublisher {

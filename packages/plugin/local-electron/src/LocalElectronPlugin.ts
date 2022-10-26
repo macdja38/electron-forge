@@ -1,4 +1,4 @@
-import { ForgeConfig, ForgeHookFn } from '@electron-forge/shared-types';
+import { ResolvedForgeConfig, ForgeHookFn } from '@electron-forge/shared-types';
 import PluginBase from '@electron-forge/plugin-base';
 import fs from 'fs-extra';
 
@@ -50,7 +50,7 @@ export default class LocalElectronPlugin extends PluginBase<LocalElectronPluginC
     }
   };
 
-  private afterExtract = async (_config: ForgeConfig, buildPath: string, _electronVersion: string, platform: string, arch: string) => {
+  private afterExtract = async (_config: ResolvedForgeConfig, buildPath: string, _electronVersion: string, platform: string, arch: string) => {
     if (!this.enabled) return;
 
     this.checkPlatform(platform);

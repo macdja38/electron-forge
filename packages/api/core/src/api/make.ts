@@ -1,7 +1,7 @@
 import { asyncOra } from '@electron-forge/async-ora';
 import chalk from 'chalk';
 import { getHostArch } from '@electron/get';
-import { IForgeResolvableMaker, ForgeConfig, ForgeArch, ForgePlatform, ForgeMakeResult, ForgeConfigMaker } from '@electron-forge/shared-types';
+import { IForgeResolvableMaker, ResolvedForgeConfig, ForgeArch, ForgePlatform, ForgeMakeResult, ForgeConfigMaker } from '@electron-forge/shared-types';
 import MakerBase from '@electron-forge/maker-base';
 import fs from 'fs-extra';
 import path from 'path';
@@ -28,7 +28,7 @@ class MakerImpl extends MakerBase<any> {
 
 type MakeTargets = ForgeConfigMaker[] | string[];
 
-function generateTargets(forgeConfig: ForgeConfig, overrideTargets?: MakeTargets) {
+function generateTargets(forgeConfig: ResolvedForgeConfig, overrideTargets?: MakeTargets) {
   if (overrideTargets) {
     return overrideTargets.map((target) => {
       if (typeof target === 'string') {
@@ -89,7 +89,7 @@ export default async ({
 }: MakeOptions): Promise<ForgeMakeResult[]> => {
   asyncOra.interactive = interactive;
 
-  let forgeConfig!: ForgeConfig;
+  let forgeConfig!: ResolvedForgeConfig;
   await asyncOra('Resolving Forge Config', async () => {
     const resolvedDir = await resolveDir(dir);
     if (!resolvedDir) {

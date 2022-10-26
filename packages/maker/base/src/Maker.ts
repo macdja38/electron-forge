@@ -1,4 +1,4 @@
-import { ForgeArch, ForgeConfig, ForgePlatform, IForgeMaker } from '@electron-forge/shared-types';
+import { ForgeArch, ResolvedForgeConfig, ForgePlatform, IForgeMaker } from '@electron-forge/shared-types';
 import fs from 'fs-extra';
 import path from 'path';
 import which from 'which';
@@ -30,7 +30,7 @@ export interface MakerOptions {
   /**
    * Fully resolved forge configuration, you shouldn't really need this
    */
-  forgeConfig: ForgeConfig;
+  forgeConfig: ResolvedForgeConfig;
   /**
    * The application's package.json file
    */

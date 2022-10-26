@@ -1,4 +1,5 @@
 import { ForgeConfig, IForgeResolvableMaker, IForgeResolvablePublisher } from '@electron-forge/shared-types';
+import assert from 'assert';
 import { expect } from 'chai';
 import { merge } from 'lodash';
 
@@ -104,6 +105,7 @@ describe('upgradeForgeConfig', () => {
     };
     const newConfig = upgradeForgeConfig(oldConfig);
     expect(newConfig.publishers).to.have.lengthOf(1);
+    assert(newConfig.publishers);
     const publisherConfig = (newConfig.publishers[0] as IForgeResolvablePublisher).config;
     expect(publisherConfig.repository).to.deep.equal(repo);
     expect(publisherConfig.octokitOptions).to.deep.equal(octokitOptions);

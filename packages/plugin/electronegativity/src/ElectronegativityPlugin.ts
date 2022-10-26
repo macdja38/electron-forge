@@ -1,4 +1,4 @@
-import { ForgeConfig, ForgeHookFn } from '@electron-forge/shared-types';
+import { ResolvedForgeConfig, ForgeHookFn } from '@electron-forge/shared-types';
 import PluginBase from '@electron-forge/plugin-base';
 import runElectronegativity from '@doyensec/electronegativity';
 
@@ -67,7 +67,7 @@ export default class ElectronegativityPlugin extends PluginBase<Electronegativit
     return null;
   }
 
-  postPackage = async (_forgeConfig: ForgeConfig, options: PostPackageOptions): Promise<void> => {
+  postPackage = async (_forgeConfig: ResolvedForgeConfig, options: PostPackageOptions): Promise<void> => {
     await runElectronegativity(
       {
         ...this.config,
