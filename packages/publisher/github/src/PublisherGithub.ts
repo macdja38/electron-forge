@@ -3,7 +3,7 @@ import { ForgeMakeResult } from '@electron-forge/shared-types';
 import fs from 'fs-extra';
 import mime from 'mime-types';
 import path from 'path';
-import PublisherBase, { PublisherOptions } from '@electron-forge/publisher-base';
+import { PublisherBase, PublisherOptions } from '@electron-forge/publisher-base';
 import { GetResponseDataTypeFromEndpointMethod } from '@octokit/types';
 
 import GitHub from './util/github';
@@ -130,4 +130,4 @@ export default class PublisherGithub extends PublisherBase<PublisherGitHubConfig
   }
 }
 
-export { PublisherGitHubConfig };
+export { PublisherGithub, PublisherGitHubConfig };

@@ -1,4 +1,4 @@
-import MakerBase, { MakerOptions } from '@electron-forge/maker-base';
+import { MakerBase, MakerOptions } from '@electron-forge/maker-base';
 import { ForgePlatform } from '@electron-forge/shared-types';
 
 import chalk from 'chalk';
@@ -53,4 +53,4 @@ export default class MakerWix extends MakerBase<MakerWixConfig> {
   }
 }
 
-export { MakerWixConfig };
+export { MakerWix, MakerWixConfig };

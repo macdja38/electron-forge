@@ -1,5 +1,5 @@
 import { ForgeConfig, ForgeHookFn } from '@electron-forge/shared-types';
-import PluginBase from '@electron-forge/plugin-base';
+import { PluginBase } from '@electron-forge/plugin-base';
 import runElectronegativity from '@doyensec/electronegativity';
 
 // To be more precise, postPackage options we care about.
@@ -78,3 +78,5 @@ export default class ElectronegativityPlugin extends PluginBase<Electronegativit
     );
   };
 }
+
+export { ElectronegativityPlugin };

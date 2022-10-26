@@ -1,5 +1,5 @@
 import { ForgeArch } from '@electron-forge/shared-types';
-import MakerBase, { MakerOptions } from '@electron-forge/maker-base';
+import { MakerBase, MakerOptions } from '@electron-forge/maker-base';
 
 import { expect } from 'chai';
 import path from 'path';

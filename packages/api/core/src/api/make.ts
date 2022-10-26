@@ -2,7 +2,7 @@ import { asyncOra } from '@electron-forge/async-ora';
 import chalk from 'chalk';
 import { getHostArch } from '@electron/get';
 import { IForgeResolvableMaker, ForgeConfig, ForgeArch, ForgePlatform, ForgeMakeResult, ForgeConfigMaker } from '@electron-forge/shared-types';
-import MakerBase from '@electron-forge/maker-base';
+import { MakerBase } from '@electron-forge/maker-base';
 import fs from 'fs-extra';
 import path from 'path';
 import filenamify from 'filenamify';

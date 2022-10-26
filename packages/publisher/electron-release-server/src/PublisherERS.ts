@@ -1,4 +1,4 @@
-import PublisherBase, { PublisherOptions } from '@electron-forge/publisher-base';
+import { PublisherBase, PublisherOptions } from '@electron-forge/publisher-base';
 import { asyncOra } from '@electron-forge/async-ora';
 import { ForgePlatform, ForgeArch } from '@electron-forge/shared-types';
 
@@ -156,4 +156,4 @@ export default class PublisherERS extends PublisherBase<PublisherERSConfig> {
   }
 }
 
-export { PublisherERSConfig };
+export { PublisherERS, PublisherERSConfig };

@@ -1,4 +1,4 @@
-import MakerBase, { EmptyConfig, MakerOptions } from '@electron-forge/maker-base';
+import { MakerBase, EmptyConfig, MakerOptions } from '@electron-forge/maker-base';
 import { ForgePlatform } from '@electron-forge/shared-types';
 
 import path from 'path';
@@ -28,3 +28,5 @@ export default class MakerZIP extends MakerBase<MakerZIPConfig> {
     return [zipPath];
   }
 }
+
+export { MakerZIP };

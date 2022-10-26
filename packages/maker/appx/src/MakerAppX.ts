@@ -1,4 +1,4 @@
-import MakerBase, { MakerOptions } from '@electron-forge/maker-base';
+import { MakerBase, MakerOptions } from '@electron-forge/maker-base';
 import { ForgePlatform } from '@electron-forge/shared-types';
 
 import fs from 'fs-extra';
@@ -130,4 +130,4 @@ export default class MakerAppX extends MakerBase<MakerAppXConfig> {
   }
 }
 
-export { MakerAppXConfig };
+export { MakerAppX, MakerAppXConfig };

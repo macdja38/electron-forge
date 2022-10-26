@@ -1,4 +1,4 @@
-import PublisherBase, { PublisherOptions } from '@electron-forge/publisher-base';
+import { PublisherBase, PublisherOptions } from '@electron-forge/publisher-base';
 import { asyncOra } from '@electron-forge/async-ora';
 
 import fetch from 'node-fetch';
@@ -84,4 +84,4 @@ export default class PublisherBitbucket extends PublisherBase<PublisherBitbucket
   }
 }
 
-export { PublisherBitbucketConfig };
+export { PublisherBitbucket, PublisherBitbucketConfig };

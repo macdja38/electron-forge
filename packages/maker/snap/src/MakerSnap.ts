@@ -1,5 +1,5 @@
 import { ForgePlatform } from '@electron-forge/shared-types';
-import MakerBase, { MakerOptions } from '@electron-forge/maker-base';
+import { MakerBase, MakerOptions } from '@electron-forge/maker-base';
 import path from 'path';
 
 import { MakerSnapConfig } from './Config';
@@ -33,4 +33,4 @@ export default class MakerSnap extends MakerBase<MakerSnapConfig> {
   }
 }
 
-export { MakerSnapConfig };
+export { MakerSnap, MakerSnapConfig };

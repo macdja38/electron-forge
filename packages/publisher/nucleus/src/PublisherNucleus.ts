@@ -1,4 +1,4 @@
-import PublisherBase, { PublisherOptions } from '@electron-forge/publisher-base';
+import { PublisherBase, PublisherOptions } from '@electron-forge/publisher-base';
 import { asyncOra } from '@electron-forge/async-ora';
 import debug from 'debug';
 import FormData from 'form-data';
@@ -67,4 +67,4 @@ export default class PublisherNucleus extends PublisherBase<PublisherNucleusConf
   }
 }
 
-export { PublisherNucleusConfig };
+export { PublisherNucleus, PublisherNucleusConfig };

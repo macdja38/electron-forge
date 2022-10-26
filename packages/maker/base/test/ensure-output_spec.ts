@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 
-import MakerBase, { EmptyConfig } from '../src/Maker';
+import { MakerBase, EmptyConfig } from '../src/Maker';
 
 class MakerImpl extends MakerBase<EmptyConfig> {
   name = 'test';

@@ -5,7 +5,7 @@ import path from 'path';
 import { S3Client } from '@aws-sdk/client-s3';
 import { Progress, Upload } from '@aws-sdk/lib-storage';
 
-import PublisherBase, { PublisherOptions } from '@electron-forge/publisher-base';
+import { PublisherBase, PublisherOptions } from '@electron-forge/publisher-base';
 import { asyncOra } from '@electron-forge/async-ora';
 
 import { PublisherS3Config } from './Config';
@@ -101,4 +101,4 @@ export default class PublisherS3 extends PublisherBase<PublisherS3Config> {
   }
 }
 
-export { PublisherS3Config };
+export { PublisherS3, PublisherS3Config };

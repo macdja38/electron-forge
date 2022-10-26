@@ -1,11 +1,11 @@
 import { ForgeHookFn } from '@electron-forge/shared-types';
-import PluginBase, { StartOptions } from '@electron-forge/plugin-base';
+import { PluginBase, StartOptions } from '@electron-forge/plugin-base';
 import * as path from 'path';
 
 import { CompilePluginConfig } from './Config';
 import { createCompileHook } from './lib/compile-hook';
 
-export default class LocalElectronPlugin extends PluginBase<CompilePluginConfig> {
+export default class CompileElectronPlugin extends PluginBase<CompilePluginConfig> {
   name = 'electron-compile';
 
   private dir!: string;
@@ -34,4 +34,4 @@ export default class LocalElectronPlugin extends PluginBase<CompilePluginConfig>
   }
 }
 
-export { CompilePluginConfig };
+export { CompileElectronPlugin, CompilePluginConfig };
