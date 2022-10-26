@@ -1,6 +1,6 @@
 import { asyncOra } from '@electron-forge/async-ora';
 import PluginBase from '@electron-forge/plugin-base';
-import { ElectronProcess, ForgeArch, ForgeConfig, ForgeHookFn, ForgePlatform } from '@electron-forge/shared-types';
+import { ElectronProcess, ForgeArch, ForgeConfig, ForgeHookMap, ForgePlatform } from '@electron-forge/shared-types';
 import Logger, { Tab } from '@electron-forge/web-multi-logger';
 
 import chalk from 'chalk';
@@ -64,7 +64,7 @@ export default class WebpackPlugin extends PluginBase<WebpackPluginConfig> {
     }
 
     this.startLogic = this.startLogic.bind(this);
-    this.getHook = this.getHook.bind(this);
+    this.getHooks = this.getHooks.bind(this);
   }
 
   private isValidPort = (port: number) => {
@@ -151,41 +151,34 @@ export default class WebpackPlugin extends PluginBase<WebpackPluginConfig> {
 
   private loggedOutputUrl = false;
 
-  getHook(name: string): ForgeHookFn | null {
-    switch (name) {
-      case 'prePackage':
-        this.isProd = true;
-        return async (config: ForgeConfig, platform: ForgePlatform, arch: ForgeArch) => {
-          await fs.remove(this.baseDir);
-          await utils.rebuildHook(
-            this.projectDir,
-            await utils.getElectronVersion(this.projectDir, await fs.readJson(path.join(this.projectDir, 'package.json'))),
-            platform,
-            arch,
-            config.rebuildConfig
-          );
-          await this.compileMain();
-          await this.compileRenderers();
-        };
-      case 'postStart':
-        return async (_config: ForgeConfig, child: ElectronProcess) => {
-          if (!this.loggedOutputUrl) {
-            console.info(`\n\nWebpack Output Available: ${chalk.cyan(`http://localhost:${this.loggerPort}`)}\n`);
-            this.loggedOutputUrl = true;
-          }
-          d('hooking electron process exit');
-          child.on('exit', () => {
-            if (child.restarted) return;
-            this.exitHandler({ cleanup: true, exit: true });
-          });
-        };
-      case 'resolveForgeConfig':
-        return this.resolveForgeConfig;
-      case 'packageAfterCopy':
-        return this.packageAfterCopy;
-      default:
-        return null;
-    }
+  getHooks(): ForgeHookMap {
+    return {
+      prePackage: async (config: ForgeConfig, platform: ForgePlatform, arch: ForgeArch) => {
+        await fs.remove(this.baseDir);
+        await utils.rebuildHook(
+          this.projectDir,
+          await utils.getElectronVersion(this.projectDir, await fs.readJson(path.join(this.projectDir, 'package.json'))),
+          platform,
+          arch,
+          config.rebuildConfig
+        );
+        await this.compileMain();
+        await this.compileRenderers();
+      },
+      postStart: async (_config: ForgeConfig, child: ElectronProcess) => {
+        if (!this.loggedOutputUrl) {
+          console.info(`\n\nWebpack Output Available: ${chalk.cyan(`http://localhost:${this.loggerPort}`)}\n`);
+          this.loggedOutputUrl = true;
+        }
+        d('hooking electron process exit');
+        child.on('exit', () => {
+          if (child.restarted) return;
+          this.exitHandler({ cleanup: true, exit: true });
+        });
+      },
+      resolveForgeConfig: this.resolveForgeConfig,
+      packageAfterCopy: this.packageAfterCopy,
+    };
   }
 
   resolveForgeConfig = async (forgeConfig: ForgeConfig): Promise<ForgeConfig> => {
